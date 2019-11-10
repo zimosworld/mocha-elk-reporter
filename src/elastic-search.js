@@ -107,14 +107,14 @@ module.exports = function sendTestResults(testResultsLog, done) {
     }
 
     var hostname = repoConfig.elasticSearchHost
+    var auth = ''
     if (!!elasticsearchUsername === true || !!elasticsearchPassword === true) {
-      auth = `${elasticsearchUsername}:${elasticsearchPassword}@`
-      // Override any username:password in the elasticSearchHost param
-      hostname = `${auth}${hostname}`
+      auth = `${elasticsearchUsername}:${elasticsearchPassword}`
     }
 
     var esClient = elasticsearch.Client({
       host: hostname,
+      httpAuth: auth,
       log: currentLogLevel,
       requestTimeout: currentTimeout
     });
